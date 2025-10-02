@@ -50,8 +50,8 @@ public class Player extends Entity {
             up1 = ImageIO.read(new File("res/player/boy_up_1.png"));
             up2 = ImageIO.read(new File("res/player/boy_up_2.png"));
 
-            down1 = ImageIO.read(new File("res/player/boy_down_1.png"));
-            down2 = ImageIO.read(new File("res/player/boy_down_2.png"));
+            down1 = ImageIO.read(new File("res/player/marza_down1.png"));
+            down2 = ImageIO.read(new File("res/player/marza_down2.png"));
 
             left1 = ImageIO.read(new File("res/player/boy_left_1.png"));
             left2 = ImageIO.read(new File("res/player/boy_left_2.png"));

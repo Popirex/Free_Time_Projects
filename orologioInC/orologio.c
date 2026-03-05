@@ -3,26 +3,14 @@
 #include <time.h>
 #include <raylib.h>
 
-const int width = 1000;
-const int height = 1000;
+const float width = 1000.0f;
+const float height = 1000.0f;
+const float HandThickness = 3;
 const float radius = width * 0.4;
 const Vector2 center = { width/2, height/2};
 
 void GetDigitalTime( char *frase, struct tm *tempo){
-
-    if(tempo->tm_min < 10 && tempo->tm_sec < 10){
-        sprintf(frase, "%d:0%d:0%d", tempo->tm_hour, tempo->tm_min, tempo->tm_sec);
-    }
-    else if(tempo->tm_min < 10){
-        sprintf(frase, "%d:0%d:%d", tempo->tm_hour, tempo->tm_min, tempo->tm_sec);
-    }
-    else if(tempo->tm_sec < 10){
-        sprintf(frase, "%d:%d:0%d", tempo->tm_hour, tempo->tm_min, tempo->tm_sec);
-    }
-    else{
-        sprintf(frase, "%d:%d:%d", tempo->tm_hour, tempo->tm_min, tempo->tm_sec);
-    }
-
+    sprintf(frase, "%02d:%02d:%02d", tempo->tm_hour, tempo->tm_min, tempo->tm_sec );
 }
 
 void DrawDigitalClock(struct tm *tempo){
@@ -59,19 +47,21 @@ void DrawTicks(){
 
 
         // internal point
-        int xInterna = width/2 + (radius * fattoreInterno *  sinf(angolo * DEG2RAD));
+        float xInterna = width/2 + (radius * fattoreInterno *  sinf(angolo * DEG2RAD));
 
-        int yInterna = height / 2 - (radius * fattoreInterno * cosf(angolo * DEG2RAD));
+        float yInterna = height / 2 - (radius * fattoreInterno * cosf(angolo * DEG2RAD));
 
         Vector2 posInterna = {xInterna, yInterna};
 
         // external point
 
-        int xEsterna =  width/2 + (radius * 0.95 *  sinf(angolo * DEG2RAD));
+        float xEsterna =  width/2 + (radius * 0.95 *  sinf(angolo * DEG2RAD));
 
-        int yEsterna =  height / 2 - (radius * 0.95 * cosf(angolo * DEG2RAD));
+        float yEsterna =  height / 2 - (radius * 0.95 * cosf(angolo * DEG2RAD));
 
         Vector2 posEsterna = {xEsterna, yEsterna};
+
+        
 
         DrawLineV(posInterna, posEsterna, BLACK);
 
@@ -86,46 +76,51 @@ void DrawSecondHand(struct tm *tempo){
 
     float angolo = tempo->tm_sec * 6;
 
-    int xEsterna =  width/2 + (radius * 0.84 *  sinf(angolo * DEG2RAD));
+    float xEsterna =  width/2 + (radius * 0.84 *  sinf(angolo * DEG2RAD));
 
-    int yEsterna =  height / 2 - (radius * 0.84 * cosf(angolo * DEG2RAD));
+    float yEsterna =  height / 2 - (radius * 0.84 * cosf(angolo * DEG2RAD));
 
     Vector2 posEsterna = {xEsterna, yEsterna};
 
-    DrawLineV(center, posEsterna,  BLUE );
+
+    DrawLineEx(center, posEsterna, HandThickness, BLUE);
+
 }
 
 void DrawMinuteHand(struct tm *tempo){
     float angolo = tempo->tm_min * 6;
     float offset = tempo->tm_sec * 0.1;
 
-    int xEsterna =  width/2 + (radius * 0.74 *  sinf((angolo + offset) * DEG2RAD));
+    float xEsterna =  width/2 + (radius * 0.74 *  sinf((angolo + offset) * DEG2RAD));
 
-    int yEsterna =  height / 2 - (radius * 0.74 * cosf((angolo + offset) * DEG2RAD));
+    float yEsterna =  height / 2 - (radius * 0.74 * cosf((angolo + offset) * DEG2RAD));
 
     Vector2 posEsterna = {xEsterna, yEsterna};
 
-    DrawLineV(center, posEsterna,  RED );
+    DrawLineEx(center, posEsterna, HandThickness, RED);
+
 
 }
 
 void DrawHourHand(struct tm *tempo){
 
     float angolo = (tempo->tm_hour % 12) * 30;
-    float offset = tempo->tm_min * 0.1;
+    float offset = tempo->tm_min * 0.5f;
 
-    int xEsterna =  width/2 + (radius * 0.64 *  sinf((angolo + offset) * DEG2RAD));
+    float xEsterna =  width/2 + (radius * 0.60 *  sinf((angolo + offset) * DEG2RAD));
 
-    int yEsterna =  height / 2 - (radius * 0.64 * cosf((angolo + offset) * DEG2RAD));
+    float yEsterna =  height / 2 - (radius * 0.60 * cosf((angolo + offset) * DEG2RAD));
 
     Vector2 posEsterna = {xEsterna, yEsterna};
 
-    DrawLineV(center, posEsterna,  LIME );
+    DrawLineEx(center, posEsterna, HandThickness, LIME);
+
 
 }
 
 void DrawAnalogClock(struct tm *tempo){
 
+    DrawCircleV(center, radius*1.03f, LIME);
     DrawCircleV(center,  radius, LIGHTGRAY);
     DrawTicks();
     DrawSecondHand(tempo);
@@ -138,7 +133,7 @@ void DrawDate(struct tm *tempo){
 
     char data[100];
 
-    sprintf( data ,"%d %d %d", tempo->tm_mday, tempo->tm_mon + 1 ,tempo->tm_year + 1900);
+    sprintf( data ,"%02d %02d %04d", tempo->tm_mday, tempo->tm_mon + 1 ,tempo->tm_year + 1900);
 
     DrawText(data, width/2 - 130, 10, 60, LIME);
 }

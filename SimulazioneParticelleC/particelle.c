@@ -13,8 +13,8 @@
 #define MAX_VEL 5
 #define NUM_PARTICLE 200
 #define GRAVITY 1
-#define RESISTENCE 0.8
-#define MIN_VEL 0.5
+#define RESISTENCE 0.7
+#define MIN_VEL 1
 
 
 //      STRUCTURES
@@ -97,12 +97,15 @@ void AnimateParticles(Particella particelle[]){
         }
         if(particelle[i].pos.y - particelle[i].radius <= 0 || particelle[i].pos.y + particelle[i].radius >= HEIGHT) //     asse Y
         { 
-            particelle[i].vel.y = -(particelle[i].vel.y * RESISTENCE);
 
             if(fabsf(particelle[i].vel.y) < MIN_VEL){
                 particelle[i].vel.y = 0;
 
             }
+            
+            particelle[i].vel.y = -(particelle[i].vel.y * RESISTENCE);
+
+            
 
         }
 
@@ -127,8 +130,8 @@ void AnimateParticles(Particella particelle[]){
 
 void PerciveGravity(Particella particelle[]){
     for(int i = 0 ; i < NUM_PARTICLE; i++){
-        bool aTerra = particelle[i].pos.y + particelle[i].radius >= HEIGHT - 1 ;
-        bool ferma = fabsf(particelle[i].vel.y) < MIN_VEL;
+        bool aTerra = particelle[i].pos.y + particelle[i].radius >= HEIGHT - 10 ;
+        bool ferma = fabsf(particelle[i].vel.y) <= MIN_VEL;
         if( !(aTerra && ferma)){
             particelle[i].vel.y += GRAVITY;
         }

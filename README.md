@@ -2,7 +2,7 @@
 
 This is a collection of all my small side projects — stuff I build in my free time just for fun, learning, or because I saw something cool and thought "I want to try making that."
 
-Don't expect perfection here. These are personal experiments born from curiosity and passion for programming. I'm a 21-year-old computer science student who loves learning by experimenting and building things from scratch.
+Don't expect perfection here. These are personal experiments born from curiosity and passion for programming. I'm a 22-year-old computer science student who loves learning by experimenting and building things from scratch.
 
 ## What's Inside
 
